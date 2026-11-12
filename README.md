@@ -1,5 +1,5 @@
 # Luminara
-Creators: Shivaji Ganesh, Ryan Deng, Shubh Rawal, Naysa Ratra, Vishalkiran Raichur, Suhas Kappala  
+Creators: Vishalkiran Raichur, Shivaji Ganesh, Ryan Deng, Shubh Rawal, Naysa Ratra,  
 Date Finished: April 30, 2026  
 Description: Luminara is a readability-focused learning app that helps users turn complex writing into clearer, easier-to-understand language. Users can upload or paste text, convert common document formats, and get simplified output powered by local AI. A built-in personal dictionary lets each user save confusing words with definitions so they can review and learn over time. The platform combines a polished React interface with a Flask backend to deliver a smooth, practical study experience.  
 
