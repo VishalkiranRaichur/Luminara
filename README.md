@@ -1,91 +1,220 @@
-Luminara
-Making academic reading more accessible without losing the meaning.
-Luminara is a team-built, AI-assisted reading application developed through the Responsible Computing Club at San José State University (Spring 2026). It helps students work through dense academic material by identifying difficult language, simplifying selected passages, and supporting vocabulary learning—all while aiming to preserve the document's original meaning and structure.
+<div align="center">
 
-Rather than sending an entire document to a generative model, Luminara uses traditional NLP to identify what needs attention first, then a locally running Llama 3 model through Ollama to rewrite the selected text. The result is a more targeted approach to simplification, designed with accessibility, privacy, and resource efficiency in mind.
+# 📖 Luminara
 
-Project: Original team repository · Status: Spring 2026 team project
-Why we built it
-A lot of academic material is harder to read than it needs to be. Technical vocabulary, long sentences, and dense formatting can make studying exhausting—particularly for students learning in a second language or readers who benefit from dyslexia-friendly presentation.
+### Make academic reading easier without losing the meaning.
 
-Our first approach was to make complicated text shorter. Feedback from our demo made us rethink that goal: simpler isn't necessarily better if important details disappear. We shifted toward a system that helps readers understand difficult language without unnecessarily rewriting everything around it, and added a personal dictionary so the experience supports learning over time.
-What Luminara does
-- Document input and output: Processes PDFs, slide decks, Word documents, and images of pages; supports text extraction, OCR where necessary, and converting processed content back into a downloadable file.
-- Targeted simplification: Uses readability and word-frequency signals to flag difficult words or phrases before asking the language model to generate replacements.
-- Local AI: Uses Ollama with Llama 3 for rewriting, rather than requiring a cloud-hosted model to process document text.
-- Personal vocabulary dictionary: Provides authenticated endpoints to save, retrieve, and delete words with definitions and parts of speech; saved vocabulary can guide subsequent simplification.
-- Reading accessibility options: The application interface includes dyslexia-friendly and text-to-speech options, alongside format, language, and page-range choices.
-- Containerized development: Uses Docker Compose to coordinate the frontend, backend, and local AI service.
-Architecture
-                 User / React frontend
-                          |
-                   Flask REST API
-                          |
-                   Document upload
-                          |
-          +---------------+---------------+
-          |                               |
-   Parse PDF / DOCX / PPTX         OCR for page images
-          |                               |
-          +---------------+---------------+
-                          |
-                 Extract and normalize
-                          |
-            spaCy + textstat + wordfreq
-               Identify difficult spans
-                          |
-              Ollama / local Llama 3
-             Rewrite flagged spans only
-                          |
-                Reconstruct document
-                          |
-                  Download output
+An AI-assisted reading app that finds the hard parts of a document, simplifies only those parts, and helps you learn the vocabulary along the way.
 
-      JWT authentication + per-user dictionary API
-The central design decision was flag first, generate second. NLP handles identifying potentially difficult text, while the generative model focuses on replacements. This reduces unnecessary rewriting and gives us more control over the information that stays unchanged.
-Document processing flow
-1. Accept a document and check its file type.
-2. Extract the content using a format-specific parser or OCR.
-3. Analyze readability and flag difficult spans.
-4. Simplify selected spans using the local model, taking saved vocabulary into account.
-5. Reconstruct the content with the targeted replacements.
-6. Convert it back toward the source document's file type and structure.
-7. Return the downloadable result and clean up temporary uploaded files.
-Tech stack
-Area	Technology
-Frontend	React
-Backend and APIs	Python, Flask, Flask-CORS
-NLP and readability	spaCy, textstat, wordfreq
-Local language model	Ollama, Llama 3
-File processing	PyMuPDF, python-docx, python-pptx, pytesseract, Pillow
-Authentication	JWT, PyJWT
-Development and orchestration	Docker, Docker Compose
+![React](https://img.shields.io/badge/Frontend-React-61DAFB?logo=react&logoColor=white)
+![Flask](https://img.shields.io/badge/Backend-Flask-000000?logo=flask&logoColor=white)
+![Python](https://img.shields.io/badge/Python-3-3776AB?logo=python&logoColor=white)
+![spaCy](https://img.shields.io/badge/NLP-spaCy-09A3D5?logo=spacy&logoColor=white)
+![Ollama](https://img.shields.io/badge/LLM-Llama%203%20via%20Ollama-black)
+![Docker](https://img.shields.io/badge/Docker-Compose-2496ED?logo=docker&logoColor=white)
 
+**Responsible Computing Club · San José State University · Spring 2026**
 
-My contributions — Lead Backend Developer
-I led backend development for Luminara, from the original processing flow to the Flask services that connect document handling, NLP, and local AI. My main contributions included:
-- Designed and implemented the document-processing pipeline, integrating text extraction and format handling for PDFs, presentations, Word documents, and image-based content.
-- Built the difficulty-detection stage with readability scoring and word-rarity checks, so the AI could focus on flagged sections instead of rewriting an entire document.
-- Integrated Ollama and Llama 3 to generate replacements for selected text, with support for the reader's saved vocabulary.
-- Implemented backend authentication safeguards, including JWT-based login, rate limiting, disposable-email checks, and password-length validation.
-- Developed the personal-dictionary API for user-specific word storage, retrieval, and deletion.
-- Helped connect the React frontend to Flask, resolving CORS, port, and API-integration issues, and contributed to teammates' code and Figma design work.
-I also sketched the original seven-step backend pipeline. One lesson that stayed with me: AI isn't always more useful when it generates more. For this project, the challenge was deciding what not to change.
-Engineering challenges and lessons
-Preserving meaning. Early simplification could remove useful details. We responded by narrowing the scope of rewriting and building vocabulary support, rather than optimizing only for shorter output.
+</div>
 
-Readability scores aren't consistent across every document. Flesch–Kincaid measurements varied with text length, which sometimes led to too much or too little text being flagged. Testing on course textbooks surfaced those problems more clearly than small examples.
+---
 
-Document formatting is harder than plain text. Extracting words is one problem; putting them back without disturbing headings, titles, and structure is another. Our pipeline had to account for the source format and reconstruction step.
+## Table of Contents
 
-Integration matters. Connecting the React interface, Flask endpoints, dictionary operations, and local inference environment involved practical debugging of CORS and service ports.
-Testing and project feedback
-We evaluated Luminara with textbook material from our own classes across different subjects, looking at readability and whether simplified passages retained their meaning. The team also used feedback from a project demo to adjust the product direction. This was a semester team project, not a production-scale or clinically validated accessibility tool; no numerical accuracy or performance claims are made here.
-Team and credit
-Luminara was developed collaboratively through SJSU's Responsible Computing Club in Spring 2026.
-- Vishalkiran Raichur — Lead backend developer
-- Shivaji Ganesh
-- Ryan Deng
-- Shubh Rawal
-- Naysa Ratra
-- Suhas Kappala
+- [Overview](#overview)
+- [Why We Built It](#why-we-built-it)
+- [Features](#features)
+- [How It Works](#how-it-works)
+- [Tech Stack](#tech-stack)
+- [Getting Started](#getting-started)
+- [Engineering Challenges & Lessons](#engineering-challenges--lessons)
+- [Testing & Feedback](#testing--feedback)
+- [My Contributions](#my-contributions)
+- [Team](#team)
+
+---
+
+## Overview
+
+Luminara helps students work through dense academic material such as textbooks, papers, and lecture slides. It flags difficult language, simplifies selected passages, and builds a personal vocabulary list, while keeping the document's original meaning and structure.
+
+**What makes it different:** Luminara doesn't send a whole document to a generative model. It uses traditional NLP to decide **what** needs attention, then has a **locally running Llama 3** model rewrite only those spans.
+
+| 🎯 Targeted | 🔒 Private | ⚡ Efficient |
+|:---:|:---:|:---:|
+| Only flagged text is rewritten | Document text stays on a local model | Less generation, fewer wasted resources |
+
+---
+
+## Why We Built It
+
+A lot of academic material is harder to read than it needs to be. Technical vocabulary, long sentences, and dense formatting make studying exhausting, especially for:
+
+- 🌍 students reading in a **second language**
+- 🔤 readers who benefit from **dyslexia-friendly** presentation
+- 📚 anyone working through an unfamiliar subject
+
+> **Our pivot:** At first, we tried to make complicated text *shorter*. Feedback from our demo changed that goal: **simpler isn't better if important details disappear.** We moved toward helping readers *understand* hard language without rewriting everything around it, and we added a personal dictionary so the app supports learning over time.
+
+---
+
+## Features
+
+| Feature | Description |
+|---|---|
+| 📄 **Multi-format documents** | Upload PDFs, slide decks (PPTX), Word documents (DOCX), or images of pages. Text is extracted, with OCR where needed, and you can download the processed result as a file. |
+| 🎯 **Targeted simplification** | Readability and word-frequency signals flag difficult words and phrases *before* the language model is asked for replacements. |
+| 🧠 **Local AI** | Rewriting runs on Llama 3 through Ollama, so no cloud-hosted model processes your document text. |
+| 📒 **Personal vocabulary dictionary** | Authenticated endpoints to save, retrieve, and delete words with definitions and parts of speech. Saved words guide later simplifications. |
+| ♿ **Accessibility options** | Dyslexia-friendly display and text-to-speech, plus format, language, and page-range options. |
+| 🐳 **Containerized setup** | Docker Compose runs the frontend, backend, and local AI service together. |
+
+---
+
+## How It Works
+
+### Core design principle: **flag first, generate second**
+
+NLP identifies the difficult text, and the generative model only writes replacements. This cuts down on unnecessary rewriting and gives us more control over what stays unchanged.
+
+### Architecture
+
+```mermaid
+flowchart TD
+    A[👤 User / React Frontend] --> B[Flask REST API]
+    B --> C[Document Upload]
+    C --> D[Parse PDF / DOCX / PPTX]
+    C --> E[OCR for Page Images]
+    D --> F[Extract & Normalize Text]
+    E --> F
+    F --> G["Identify Difficult Spans<br/>(spaCy + textstat + wordfreq)"]
+    G --> H["Rewrite Flagged Spans Only<br/>(Ollama · local Llama 3)"]
+    H --> I[Reconstruct Document]
+    I --> J[⬇️ Download Output]
+
+    K[🔐 JWT Auth + Per-User Dictionary API] -.-> B
+    K -.->|saved vocabulary| H
+```
+
+### Document processing pipeline
+
+1. **Validate:** Accept the upload and check its file type.
+2. **Extract:** Pull content with a format-specific parser, or with OCR for images.
+3. **Analyze:** Score readability and flag difficult spans.
+4. **Simplify:** Rewrite only the flagged spans with the local model, using the reader's saved vocabulary.
+5. **Reconstruct:** Put the targeted replacements back into the content.
+6. **Convert:** Rebuild the output in the source document's file type and structure.
+7. **Return & clean up:** Send the downloadable result and delete temporary uploads.
+
+---
+
+## Tech Stack
+
+| Area | Technology |
+|---|---|
+| **Frontend** | React |
+| **Backend & APIs** | Python, Flask, Flask-CORS |
+| **NLP & Readability** | spaCy, textstat, wordfreq |
+| **Local Language Model** | Ollama, Llama 3 |
+| **File Processing** | PyMuPDF, python-docx, python-pptx, pytesseract, Pillow |
+| **Authentication** | JWT (PyJWT) |
+| **Dev & Orchestration** | Docker, Docker Compose |
+
+---
+
+## Getting Started
+
+### Prerequisites
+
+- [Docker](https://www.docker.com/) and Docker Compose
+- [Ollama](https://ollama.com/) with the Llama 3 model, if you run it outside Docker
+
+### Run with Docker Compose
+
+```bash
+git clone https://github.com/VishalkiranRaichur/Luminara.git
+cd Luminara
+docker compose up --build
+```
+
+If Ollama runs on your machine instead of in a container, pull the model first:
+
+```bash
+ollama pull llama3
+```
+
+### Project structure
+
+```
+Luminara/
+├── backend/            # Flask API, processing pipeline, NLP + LLM integration
+├── frontend/           # React app
+├── test_files/         # Sample documents for testing
+├── docker-compose.yml  # Orchestrates frontend, backend, and Ollama
+└── package.json
+```
+
+---
+
+## Engineering Challenges & Lessons
+
+**🧩 Preserving meaning**
+Early simplification sometimes removed useful details. We narrowed the scope of rewriting and added vocabulary support instead of optimizing only for shorter output.
+
+**📏 Readability scores aren't consistent**
+Flesch–Kincaid scores changed with text length, so the app sometimes flagged too much text or too little. Testing on real course textbooks exposed these problems much more clearly than small examples did.
+
+**🏗️ Formatting is harder than plain text**
+Extracting words is one problem. Putting them back without breaking headings, titles, and structure is another. The pipeline has to account for the source format at the reconstruction step.
+
+**🔌 Integration matters**
+Connecting the React interface, Flask endpoints, dictionary operations, and local inference took a lot of hands-on debugging, mostly around CORS and service ports.
+
+> 💡 **Key takeaway:** AI isn't always more useful when it generates more. In this project, the real challenge was deciding what *not* to change.
+
+---
+
+## Testing & Feedback
+
+- Tested on **textbook material from our own classes** across several subjects, checking readability and whether simplified passages kept their meaning.
+- Used **feedback from a live project demo** to change the product's direction.
+
+> ⚠️ **Note:** Luminara was a semester team project. It is not a production-scale or clinically validated accessibility tool, and we make no numerical accuracy or performance claims.
+
+---
+
+## My Contributions
+
+### Vishalkiran Raichur: Lead Backend Developer
+
+I led backend development for Luminara, from the original seven-step processing flow to the Flask services that connect document handling, NLP, and local AI.
+
+- **Document pipeline:** Designed and implemented text extraction and format handling for PDFs, presentations, Word documents, and image-based content.
+- **Difficulty detection:** Built the readability-scoring and word-rarity stage so the AI works on flagged sections instead of rewriting the whole document.
+- **LLM integration:** Integrated Ollama and Llama 3 to generate replacements for selected text, with support for each reader's saved vocabulary.
+- **Authentication & security:** Implemented JWT-based login, rate limiting, disposable-email checks, and password-length validation.
+- **Dictionary API:** Built the personal-dictionary API to store, retrieve, and delete words per user.
+- **Full-stack integration:** Connected the React frontend to Flask, fixed CORS, port, and API issues, and helped with teammates' code and Figma designs.
+
+---
+
+## Team
+
+Built together through **SJSU's Responsible Computing Club**, Spring 2026.
+
+| Name | Role |
+|---|---|
+| **Vishalkiran Raichur** | Lead Backend Developer |
+| Shivaji Ganesh | Team Member |
+| Ryan Deng | Team Member |
+| Shubh Rawal | Team Member |
+| Naysa Ratra | Team Member |
+| Suhas Kappala | Team Member |
+
+---
+
+<div align="center">
+
+*Built by students, for students: to make hard reading a little lighter.* ✨
+
+</div>
