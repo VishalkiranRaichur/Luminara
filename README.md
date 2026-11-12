@@ -40,7 +40,7 @@ Luminara helps students work through dense academic material such as textbooks, 
 
 **What makes it different:** Luminara doesn't send a whole document to a generative model. It uses traditional NLP to decide **what** needs attention, then has a **locally running Llama 3** model rewrite only those spans.
 
-| 🎯 Targeted | 🔒 Private | ⚡ Efficient |
+|  Targeted |  Private |  Efficient |
 |:---:|:---:|:---:|
 | Only flagged text is rewritten | Document text stays on a local model | Less generation, fewer wasted resources |
 
@@ -50,9 +50,9 @@ Luminara helps students work through dense academic material such as textbooks, 
 
 A lot of academic material is harder to read than it needs to be. Technical vocabulary, long sentences, and dense formatting make studying exhausting, especially for:
 
-- 🌍 students reading in a **second language**
-- 🔤 readers who benefit from **dyslexia-friendly** presentation
-- 📚 anyone working through an unfamiliar subject
+-  students reading in a **second language**
+-  readers who benefit from **dyslexia-friendly** presentation
+-  anyone working through an unfamiliar subject
 
 > **Our pivot:** At first, we tried to make complicated text *shorter*. Feedback from our demo changed that goal: **simpler isn't better if important details disappear.** We moved toward helping readers *understand* hard language without rewriting everything around it, and we added a personal dictionary so the app supports learning over time.
 
@@ -62,12 +62,12 @@ A lot of academic material is harder to read than it needs to be. Technical voca
 
 | Feature | Description |
 |---|---|
-| 📄 **Multi-format documents** | Upload PDFs, slide decks (PPTX), Word documents (DOCX), or images of pages. Text is extracted, with OCR where needed, and you can download the processed result as a file. |
-| 🎯 **Targeted simplification** | Readability and word-frequency signals flag difficult words and phrases *before* the language model is asked for replacements. |
-| 🧠 **Local AI** | Rewriting runs on Llama 3 through Ollama, so no cloud-hosted model processes your document text. |
-| 📒 **Personal vocabulary dictionary** | Authenticated endpoints to save, retrieve, and delete words with definitions and parts of speech. Saved words guide later simplifications. |
-| ♿ **Accessibility options** | Dyslexia-friendly display and text-to-speech, plus format, language, and page-range options. |
-| 🐳 **Containerized setup** | Docker Compose runs the frontend, backend, and local AI service together. |
+|  **Multi-format documents** | Upload PDFs, slide decks (PPTX), Word documents (DOCX), or images of pages. Text is extracted, with OCR where needed, and you can download the processed result as a file. |
+|  **Targeted simplification** | Readability and word-frequency signals flag difficult words and phrases *before* the language model is asked for replacements. |
+|  **Local AI** | Rewriting runs on Llama 3 through Ollama, so no cloud-hosted model processes your document text. |
+|  **Personal vocabulary dictionary** | Authenticated endpoints to save, retrieve, and delete words with definitions and parts of speech. Saved words guide later simplifications. |
+|  **Accessibility options** | Dyslexia-friendly display and text-to-speech, plus format, language, and page-range options. |
+|  **Containerized setup** | Docker Compose runs the frontend, backend, and local AI service together. |
 
 ---
 
@@ -205,10 +205,10 @@ Built together through **SJSU's Responsible Computing Club**, Spring 2026.
 | Name | Role |
 |---|---|
 | **Vishalkiran Raichur** | Lead Backend Developer |
-| Shivaji Ganesh | Team Member |
+| Shivaji Ganesh | Team Lead |
 | Ryan Deng | Team Member |
 | Shubh Rawal | Team Member |
-| Naysa Ratra | Team Member |
+| Naysa Ratra | Frontend Developer |
 | Suhas Kappala | Team Member |
 
 ---
